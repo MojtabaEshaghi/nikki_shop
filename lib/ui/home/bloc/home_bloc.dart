@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nikki_shop/common/exeption.dart';
@@ -19,9 +17,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required this.bannerRepository, required this.productRepository})
       : super(HomeLoading()) {
     on<HomeEvent>((event, emit) async {
-      if (event is HomeLoading) {
-        emit(HomeLoading());
+      if (event is HomeStarted || event is HomeRefresh) {
         try {
+          emit(HomeLoading());
           final banner = await bannerRepository.getAll();
           final latestProducts =
               await productRepository.getAll(ProductSort.latest);

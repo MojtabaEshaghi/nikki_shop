@@ -31,6 +31,9 @@ class MyApp extends StatelessWidget {
           textTheme: TextTheme(
               headline6: boldTextStyle,
               bodyText2: normalTextStyle,
+              button: normalTextStyle,
+              subtitle1:
+                  normalTextStyle.apply(color: LightThemeColor.secondaryColor),
               caption: normalTextStyle.apply(
                   color: LightThemeColor.secondaryTextColor)),
           fontFamily: 'samim',
@@ -38,10 +41,8 @@ class MyApp extends StatelessWidget {
               primary: LightThemeColor.primaryColor,
               secondary: LightThemeColor.secondaryColor,
               onSecondary: Colors.white)),
-      home: Directionality(
-          textDirection: TextDirection.rtl,
-          child: HomeScreen()),
+      home:
+          Directionality(textDirection: TextDirection.rtl, child: HomeScreen()),
     );
   }
 }
-
