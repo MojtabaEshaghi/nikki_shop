@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nikki_shop/data/repo/banner_repository.dart';
 import 'package:nikki_shop/theme.dart';
+import 'package:nikki_shop/ui/auth/auth.dart';
 import 'package:nikki_shop/ui/home/home.dart';
+import 'package:nikki_shop/ui/root.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
-              headline6: boldTextStyle,
+              headline6: boldTextStyle.copyWith(fontSize: 18),
               bodyText2: normalTextStyle,
               button: normalTextStyle,
               subtitle1:
@@ -37,12 +39,12 @@ class MyApp extends StatelessWidget {
               caption: normalTextStyle.apply(
                   color: LightThemeColor.secondaryTextColor)),
           fontFamily: 'samim',
-          colorScheme: ColorScheme.light(
+          colorScheme: const ColorScheme.light(
               primary: LightThemeColor.primaryColor,
               secondary: LightThemeColor.secondaryColor,
               onSecondary: Colors.white)),
       home:
-          Directionality(textDirection: TextDirection.rtl, child: HomeScreen()),
+          Directionality(textDirection: TextDirection.rtl, child: AuthScreen()),
     );
   }
 }

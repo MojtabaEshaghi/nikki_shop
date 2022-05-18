@@ -7,10 +7,9 @@ import 'package:nikki_shop/data/repo/banner_repository.dart';
 import 'package:nikki_shop/data/repo/product_repository.dart';
 import 'package:nikki_shop/generated/assets.dart';
 import 'package:nikki_shop/ui/home/bloc/home_bloc.dart';
+import 'package:nikki_shop/ui/widget/app_error.dart';
 import 'package:nikki_shop/ui/widget/banner_slider.dart';
-import 'package:nikki_shop/ui/widget/image_loading_service.dart';
-
-import '../../common/utils.dart';
+import 'package:nikki_shop/ui/widget/product_iItems.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -70,24 +69,11 @@ class HomeScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is HomeError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    state.exception.message.toString(),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
-                      },
-                      child: const Text("تلاش دوباره"))
-                ],
-              ),
-            );
+            return AppError(
+                appException: state.exception,
+                onTap: () {
+                  BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
+                });
           } else {
             throw Exception('state is not valid');
           }
@@ -134,71 +120,9 @@ class HorizontalProductList extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final product = products[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 176,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          children: [
-                            SizedBox(
-                              width: 176,
-                              height: 189,
-                              child: ImageLoadingService(
-                                url: product.image!,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            Positioned(
-                                top: 8,
-                                right: 8,
-                                child: Container(
-                                  width: 32,
-                                  height: 32,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white),
-                                  child: Icon(
-                                    CupertinoIcons.heart,
-                                    size: 20,
-                                  ),
-                                ))
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 12.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Text(
-                            product.title!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            product.previousPrice!.withPriceLabel,
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(decoration: TextDecoration.lineThrough),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(product.price!.withPriceLabel),
-                        ),
-                      ],
-                    ),
-                  ),
+                return ProductItems(
+                  product: product,
+                  borderRadius: BorderRadius.circular(12),
                 );
               }),
         )
