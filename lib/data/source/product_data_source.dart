@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:nikki_shop/common/exeption.dart';
 import 'package:nikki_shop/data/common/response_http.dart';
 import 'package:nikki_shop/data/models/product_entitiy.dart';
-import 'package:nikki_shop/data/repo/product_repository.dart';
+
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> getAll(int sort);

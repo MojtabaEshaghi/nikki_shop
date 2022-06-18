@@ -10,12 +10,23 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool isLogin = true;
+
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     const onBackground = Colors.white;
     return Theme(
       data: themeData.copyWith(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(Size.fromHeight(56)),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12))),
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                foregroundColor: MaterialStateProperty.all(
+                    Theme.of(context).colorScheme.secondary)),
+          ),
           colorScheme: themeData.colorScheme.copyWith(onSurface: onBackground),
           inputDecorationTheme: InputDecorationTheme(
               labelStyle: TextStyle(color: onBackground),
@@ -39,22 +50,58 @@ class _AuthScreenState extends State<AuthScreen> {
                 height: 16,
               ),
               Text(
-                'خوش آمدید',
+                isLogin ? 'خوش آمدید' : 'ثبت نام ',
                 style: TextStyle(color: onBackground, fontSize: 22),
               ),
               SizedBox(
                 height: 20,
               ),
-              Text('لطفا وارد حساب کاربری خود شوید',
+              Text(
+                  isLogin
+                      ? 'لطفا وارد حساب کاربری خود شوید'
+                      : 'لطفا ثبت نام كنيد',
                   style: TextStyle(color: onBackground, fontSize: 14)),
               SizedBox(
                 height: 16,
               ),
-              TextField(decoration: InputDecoration(label: Text('آدرس ایمیل'))),
+              TextField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(label: Text('آدرس ایمیل'))),
               SizedBox(
                 height: 16,
               ),
-              _PasswordTextField(onBackground: onBackground)
+              _PasswordTextField(onBackground: onBackground),
+              SizedBox(
+                height: 16,
+              ),
+              ElevatedButton(
+                  onPressed: () {}, child: Text(isLogin ? "ورود" : "ثبت نام")),
+              SizedBox(
+                height: 24,
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isLogin = !isLogin;
+                  });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      isLogin ? "حساب كاربري نداريد؟" : "حساب كاربري داريد؟",
+                      style: TextStyle(color: onBackground),
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      isLogin ? "ثبت نام " : "ورود",
+                      style: TextStyle(
+                          color: Colors.blueAccent,
+                          decoration: TextDecoration.underline),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
@@ -83,6 +130,7 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
     return TextField(
       keyboardType: TextInputType.visiblePassword,
       obscureText: obscureText,
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
           label: Text('رمز عبور'),
           suffixIcon: IconButton(

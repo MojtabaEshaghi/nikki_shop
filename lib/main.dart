@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nikki_shop/data/repo/banner_repository.dart';
 import 'package:nikki_shop/theme.dart';
 import 'package:nikki_shop/ui/auth/auth.dart';
-import 'package:nikki_shop/ui/home/home.dart';
-import 'package:nikki_shop/ui/root.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,10 +24,11 @@ class MyApp extends StatelessWidget {
     const normalTextStyle = TextStyle(
         fontWeight: FontWeight.normal, color: LightThemeColor.primaryTextColor);
     return MaterialApp(
-      title: 'Flutter Demo',
+      title:  'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.blue,
+
           textTheme: TextTheme(
               headline6: boldTextStyle.copyWith(fontSize: 18),
               bodyText2: normalTextStyle,
